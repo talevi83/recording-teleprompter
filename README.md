@@ -31,7 +31,7 @@ A fully local, privacy-first, responsive Teleprompter web application with built
 
 אפליקציית טלפרומפטר מקומית, מאובטחת ורספונסיבית, עם יכולות הקלטת וידאו ואודיו מובנות.
 
-*נוצר ע"י טל אֶבִי (Tal Evi)*
+*נוצר ע"י טל לוי (Tal Levi)*
 
 ## פיצ'רים מרכזיים
 
