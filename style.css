@@ -106,7 +106,7 @@ input[type="range"] {
   accent-color: var(--accent);
 }
 
-#direction-select {
+#direction-select, #record-mode-select {
   background: var(--control-bg);
   color: var(--fg);
   border: 1px solid var(--border);
@@ -116,7 +116,7 @@ input[type="range"] {
   font-family: inherit;
 }
 
-#direction-select:focus {
+#direction-select:focus, #record-mode-select:focus {
   outline: none;
   border-color: var(--accent);
 }

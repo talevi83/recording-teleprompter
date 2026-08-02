@@ -12,6 +12,7 @@
   const marginInput = document.getElementById('margin');
   const marginValue = document.getElementById('margin-value');
   const directionSelect = document.getElementById('direction-select');
+  const recordModeSelect = document.getElementById('record-mode-select');
   const mirrorToggle = document.getElementById('mirror-toggle');
   const flipVerticalToggle = document.getElementById('flip-vertical-toggle');
 
@@ -59,9 +60,12 @@
       largerText: "Larger text",
       recBtn: "⏺ Rec",
       stopRecBtn: "⏹ Stop",
-      recordTitle: "Record video with sound (V)",
+      recordTitle: "Record (V)",
       exitBtn: "✕ Exit",
-      exitTitle: "Back to editor (Esc)"
+      exitTitle: "Back to editor (Esc)",
+      recordMode: "Recording Mode",
+      modeVideo: "Video + Audio",
+      modeAudio: "Audio Only"
     },
     he: {
       title: "טלפרומפטר",
@@ -84,9 +88,12 @@
       largerText: "הגדל טקסט",
       recBtn: "⏺ הקלטה",
       stopRecBtn: "⏹ עצור",
-      recordTitle: "הקלט וידאו עם סאונד (V)",
+      recordTitle: "הקלטה (V)",
       exitBtn: "✕ חזור",
-      exitTitle: "חזור לעורך (Esc)"
+      exitTitle: "חזור לעורך (Esc)",
+      recordMode: "מצב הקלטה",
+      modeVideo: "וידאו וקול",
+      modeAudio: "קול בלבד"
     }
   };
 
@@ -96,6 +103,7 @@
     lineHeight: 1.4,
     margin: 10,
     direction: 'ltr',
+    recordMode: 'video',
     mirror: false,
     flipVertical: false,
     appLang: 'en'
@@ -119,6 +127,7 @@
     marginInput.value = state.margin;
     marginValue.textContent = state.margin;
     directionSelect.value = state.direction;
+    recordModeSelect.value = state.recordMode;
     scriptInput.dir = state.direction;
     mirrorToggle.checked = state.mirror;
     flipVerticalToggle.checked = state.flipVertical;
@@ -188,6 +197,10 @@
   directionSelect.addEventListener('change', () => {
     state.direction = directionSelect.value;
     scriptInput.dir = state.direction;
+    saveSettings();
+  });
+  recordModeSelect.addEventListener('change', () => {
+    state.recordMode = recordModeSelect.value;
     saveSettings();
   });
   mirrorToggle.addEventListener('change', () => {
@@ -320,8 +333,16 @@
     'video/webm',
   ];
 
+  const AUDIO_MIME_TYPES = [
+    'audio/mp4',
+    'audio/webm;codecs=opus',
+    'audio/webm',
+    'audio/ogg;codecs=opus',
+  ];
+
   function pickMimeType() {
-    return RECORDER_MIME_TYPES.find(
+    const types = state.recordMode === 'audio' ? AUDIO_MIME_TYPES : RECORDER_MIME_TYPES;
+    return types.find(
       (type) => window.MediaRecorder && MediaRecorder.isTypeSupported(type)
     );
   }
@@ -338,7 +359,12 @@
   }
 
   function downloadRecording(blob, mimeType) {
-    const ext = mimeType && mimeType.includes('mp4') ? 'mp4' : 'webm';
+    let ext;
+    if (state.recordMode === 'audio') {
+      ext = mimeType && mimeType.includes('mp4') ? 'm4a' : 'webm';
+    } else {
+      ext = mimeType && mimeType.includes('mp4') ? 'mp4' : 'webm';
+    }
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
     const filename = `teleprompter-recording-${stamp}.${ext}`;
     const url = URL.createObjectURL(blob);
@@ -367,7 +393,7 @@
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
-    a.textContent = isHe ? '📥 שמור וידאו למכשיר' : '📥 Save Video to Device';
+    a.textContent = isHe ? '📥 שמור קובץ למכשיר' : '📥 Save File to Device';
     a.style.padding = '16px 24px';
     a.style.backgroundColor = 'var(--accent)';
     a.style.color = '#000';
@@ -431,9 +457,11 @@
   }
 
   async function startRecording() {
+    const isAudioOnly = state.recordMode === 'audio';
+    
     try {
       mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 1280, height: 720 },
+        video: isAudioOnly ? false : { width: 1280, height: 720 },
         audio: true,
       });
     } catch (err) {
@@ -441,8 +469,10 @@
       return;
     }
 
-    cameraPreview.srcObject = mediaStream;
-    cameraFrame.classList.remove('hidden');
+    if (!isAudioOnly) {
+      cameraPreview.srcObject = mediaStream;
+      cameraFrame.classList.remove('hidden');
+    }
 
     const mimeType = pickMimeType();
     recordedChunks = [];
@@ -453,7 +483,8 @@
     };
 
     mediaRecorder.onstop = () => {
-      const blob = new Blob(recordedChunks, { type: mimeType || 'video/webm' });
+      const fallbackType = state.recordMode === 'audio' ? 'audio/webm' : 'video/webm';
+      const blob = new Blob(recordedChunks, { type: mimeType || fallbackType });
       recordedChunks = [];
       downloadRecording(blob, mimeType);
       releaseCamera();
