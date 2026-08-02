@@ -65,7 +65,9 @@
       exitTitle: "Back to editor (Esc)",
       recordMode: "Recording Mode",
       modeVideo: "Video + Audio",
-      modeAudio: "Audio Only"
+      modeAudio: "Audio Only",
+      creditPrefix: "Created by",
+      githubLink: "View on GitHub"
     },
     he: {
       title: "טלפרומפטר",
@@ -93,7 +95,9 @@
       exitTitle: "חזור לעורך (Esc)",
       recordMode: "מצב הקלטה",
       modeVideo: "וידאו וקול",
-      modeAudio: "קול בלבד"
+      modeAudio: "קול בלבד",
+      creditPrefix: "נוצר ע\"י",
+      githubLink: "צפה ב-GitHub"
     }
   };
 

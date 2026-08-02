@@ -145,6 +145,24 @@ input[type="checkbox"] {
   opacity: 0.85;
 }
 
+.credit-footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+}
+
+.credit-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.credit-footer a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 /* ---------- Prompter view ---------- */
 
 #prompter-view {
