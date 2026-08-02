@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teleprompter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="editor-view" class="view">
+  <div class="editor-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h1 data-i18n="title" style="margin: 0;">Teleprompter</h1>
+      <select id="language-select" style="padding: 6px; border-radius: 6px; background: var(--control-bg); color: var(--fg); border: 1px solid var(--border);">
+        <option value="en">English</option>
+        <option value="he">עברית</option>
+      </select>
+    </div>
+    <textarea id="script-input" data-i18n-placeholder="placeholder" placeholder="Paste or type your script here..."></textarea>
+
+    <div class="controls-grid">
+      <div class="control">
+        <label for="font-size"><span data-i18n="textSize">Text size:</span> <span id="font-size-value">48</span>px</label>
+        <input type="range" id="font-size" min="16" max="140" value="48" step="2">
+      </div>
+
+      <div class="control">
+        <label for="speed"><span data-i18n="scrollSpeed">Scroll speed:</span> <span id="speed-value">5</span></label>
+        <input type="range" id="speed" min="1" max="20" value="5" step="1">
+      </div>
+
+      <div class="control">
+        <label for="line-height"><span data-i18n="lineSpacing">Line spacing:</span> <span id="line-height-value">1.4</span></label>
+        <input type="range" id="line-height" min="1" max="2.5" value="1.4" step="0.1">
+      </div>
+
+      <div class="control">
+        <label for="margin"><span data-i18n="sideMargin">Side margin:</span> <span id="margin-value">10</span>%</label>
+        <input type="range" id="margin" min="0" max="40" value="10" step="1">
+      </div>
+
+      <div class="control">
+        <label for="direction-select" data-i18n="textDirection">Text direction</label>
+        <select id="direction-select">
+          <option value="ltr" data-i18n="ltr">Left to right (LTR)</option>
+          <option value="rtl" data-i18n="rtl">Right to left (RTL)</option>
+        </select>
+      </div>
+
+      <div class="control checkbox-control">
+        <label><input type="checkbox" id="mirror-toggle"> <span data-i18n="mirror">Mirror text (horizontal flip)</span></label>
+      </div>
+
+      <div class="control checkbox-control">
+        <label><input type="checkbox" id="flip-vertical-toggle"> <span data-i18n="flipVertical">Flip vertically</span></label>
+      </div>
+    </div>
+
+    <button id="start-btn" class="primary-btn" data-i18n="startBtn">Start Teleprompter</button>
+  </div>
+</div>
+
+<div id="prompter-view" class="view hidden">
+  <div id="prompter-text-wrapper">
+    <div id="prompter-text"></div>
+  </div>
+
+  <div id="center-line"></div>
+
+  <div id="camera-frame" class="hidden">
+    <video id="camera-preview" autoplay muted playsinline></video>
+    <div id="rec-indicator" class="hidden"><span class="rec-dot"></span><span id="rec-timer">00:00</span></div>
+  </div>
+
+  <div id="prompter-controls">
+    <button id="play-pause-btn" data-i18n-title="playPause" title="Play/Pause (Space)">▶</button>
+    <button id="restart-btn" data-i18n-title="restart" title="Restart to top (R)">⟲</button>
+    <button id="slower-btn" data-i18n-title="slower" title="Slower (Down arrow)">−</button>
+    <span id="speed-readout">5</span>
+    <button id="faster-btn" data-i18n-title="faster" title="Faster (Up arrow)">+</button>
+    <button id="font-smaller-btn" data-i18n-title="smallerText" title="Smaller text">A−</button>
+    <button id="font-larger-btn" data-i18n-title="largerText" title="Larger text">A+</button>
+    <button id="record-btn" data-i18n-title="recordTitle" title="Record video with sound (V)"><span data-i18n="recBtn">⏺ Rec</span></button>
+    <button id="exit-btn" data-i18n-title="exitTitle" title="Back to editor (Esc)"><span data-i18n="exitBtn">✕ Exit</span></button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
