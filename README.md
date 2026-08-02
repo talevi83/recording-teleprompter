@@ -2,7 +2,7 @@
 
 A fully local, privacy-first, responsive Teleprompter web application with built-in video and audio recording capabilities.
 
-*Created by Tal Evi*
+*Created by Tal Levi*
 
 ## Features
 
