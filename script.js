@@ -15,6 +15,11 @@
   const recordModeSelect = document.getElementById('record-mode-select');
   const mirrorToggle = document.getElementById('mirror-toggle');
   const flipVerticalToggle = document.getElementById('flip-vertical-toggle');
+  const practiceModeToggle = document.getElementById('practice-mode-toggle');
+  const helpBtn = document.getElementById('help-btn');
+  const helpModal = document.getElementById('help-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const countdownOverlay = document.getElementById('countdown-overlay');
 
   const startBtn = document.getElementById('start-btn');
   const prompterText = document.getElementById('prompter-text');
@@ -59,8 +64,9 @@
       smallerText: "Smaller text",
       largerText: "Larger text",
       recBtn: "⏺ Rec",
-      stopRecBtn: "⏹ Stop",
+      stopRecBtn: "⏹ Stop & Save",
       recordTitle: "Record (V)",
+      stopRecTitle: "Stop & Save (V)",
       exitBtn: "✕ Exit",
       exitTitle: "Back to editor (Esc)",
       recordMode: "Recording Mode",
@@ -72,7 +78,15 @@
       saveFileBtn: "📥 Save File to Device",
       closeBtnText: "✕ Close",
       savedSuccessfully: "Saved successfully! 🎉",
-      checkDownloads: "Please check your Downloads folder or Photos app."
+      checkDownloads: "Please check your Downloads folder or Photos app.",
+      practiceMode: "Practice Mode (No Recording)",
+      helpBtn: "Help & Instructions",
+      helpTitle: "How to Use",
+      helpP1: "1. Paste your script into the editor.",
+      helpP2: "2. Adjust settings (text size, speed, margins, etc.).",
+      helpP3: "3. Click 'Start Teleprompter' to begin. The recording will start automatically after a 3-second countdown (unless Practice Mode is checked).",
+      helpP4: "4. During recording, use the Spacebar to pause/resume scrolling, and Up/Down arrows to adjust speed.",
+      helpP5: "5. Click 'Stop & Save' to finish recording and save the video to your device."
     },
     he: {
       title: "טלפרומפטר",
@@ -94,8 +108,9 @@
       smallerText: "הקטן טקסט",
       largerText: "הגדל טקסט",
       recBtn: "⏺ הקלטה",
-      stopRecBtn: "⏹ עצור",
+      stopRecBtn: "⏹ עצור ושמור",
       recordTitle: "הקלטה (V)",
+      stopRecTitle: "עצור ושמור (V)",
       exitBtn: "✕ חזור",
       exitTitle: "חזור לעורך (Esc)",
       recordMode: "מצב הקלטה",
@@ -107,7 +122,15 @@
       saveFileBtn: "📥 שמור קובץ למכשיר",
       closeBtnText: "✕ סגור",
       savedSuccessfully: "נשמר בהצלחה! 🎉",
-      checkDownloads: "בדוק בתיקיית ההורדות (Downloads) או באלבום התמונות שלך."
+      checkDownloads: "בדוק בתיקיית ההורדות (Downloads) או באלבום התמונות שלך.",
+      practiceMode: "מצב אימון (ללא הקלטה)",
+      helpBtn: "עזרה והוראות",
+      helpTitle: "איך משתמשים?",
+      helpP1: "1. הדבק את התסריט שלך בעורך.",
+      helpP2: "2. התאם את ההגדרות (גודל טקסט, מהירות, שוליים וכו').",
+      helpP3: "3. לחץ על 'התחל טלפרומפטר'. ההקלטה תתחיל אוטומטית אחרי ספירה לאחור של 3 שניות (אלא אם מסומן 'מצב אימון').",
+      helpP4: "4. במהלך ההקלטה, השתמש במקש הרווח (Space) כדי לעצור/להמשיך את הגלילה, ובחיצים למעלה/למטה כדי לשנות מהירות.",
+      helpP5: "5. לחץ על 'עצור ושמור' לסיום ושמירת הוידאו למכשיר שלך."
     },
     ar: {
       title: "الملقن",
@@ -129,8 +152,9 @@
       smallerText: "تصغير النص",
       largerText: "تكبير النص",
       recBtn: "⏺ تسجيل",
-      stopRecBtn: "⏹ إيقاف",
+      stopRecBtn: "⏹ إيقاف وحفظ",
       recordTitle: "تسجيل (V)",
+      stopRecTitle: "إيقاف وحفظ (V)",
       exitBtn: "✕ خروج",
       exitTitle: "العودة للمحرر (Esc)",
       recordMode: "وضع التسجيل",
@@ -142,7 +166,15 @@
       saveFileBtn: "📥 احفظ الملف في الجهاز",
       closeBtnText: "✕ إغلاق",
       savedSuccessfully: "تم الحفظ بنجاح! 🎉",
-      checkDownloads: "يرجى التحقق من مجلد التنزيلات أو تطبيق الصور الخاص بك."
+      checkDownloads: "يرجى التحقق من مجلد التنزيلات أو تطبيق الصور الخاص بك.",
+      practiceMode: "وضع التدريب (بدون تسجيل)",
+      helpBtn: "مساعدة وتعليمات",
+      helpTitle: "كيفية الاستخدام",
+      helpP1: "1. الصق النص في المحرر.",
+      helpP2: "2. اضبط الإعدادات (حجم النص، السرعة، الهوامش، إلخ).",
+      helpP3: "3. انقر على 'بدء الملقن'. سيبدأ التسجيل تلقائياً بعد عد تنازلي لمدة 3 ثوانٍ (إلا إذا تم تحديد وضع التدريب).",
+      helpP4: "4. أثناء التسجيل، استخدم مفتاح المسافة (Space) لإيقاف/استئناف التمرير، والأسهم لأعلى/لأسفل لضبط السرعة.",
+      helpP5: "5. انقر على 'إيقاف وحفظ' لإنهاء التسجيل وحفظ الفيديو في جهازك."
     }
   };
 
@@ -155,6 +187,7 @@
     recordMode: 'video',
     mirror: false,
     flipVertical: false,
+    practiceMode: false,
     appLang: 'en'
   };
 
@@ -180,6 +213,7 @@
     scriptInput.dir = state.direction;
     mirrorToggle.checked = state.mirror;
     flipVerticalToggle.checked = state.flipVertical;
+    practiceModeToggle.checked = state.practiceMode;
     languageSelect.value = state.appLang;
     applyLanguage(state.appLang);
   }
@@ -203,10 +237,6 @@
       const key = el.getAttribute('data-i18n-title');
       if (dict[key]) el.title = dict[key];
     });
-    
-    // Update dynamic record button text if recording state is active
-    const recSpan = recordBtn.querySelector('span');
-    if (recSpan) recSpan.textContent = isRecording ? dict['stopRecBtn'] : dict['recBtn'];
   }
 
   function saveSettings() {
@@ -259,6 +289,21 @@
   flipVerticalToggle.addEventListener('change', () => {
     state.flipVertical = flipVerticalToggle.checked;
     saveSettings();
+  });
+  practiceModeToggle.addEventListener('change', () => {
+    state.practiceMode = practiceModeToggle.checked;
+    saveSettings();
+  });
+
+  helpBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    helpModal.classList.remove('hidden');
+  });
+  closeModalBtn.addEventListener('click', () => {
+    helpModal.classList.add('hidden');
+  });
+  helpModal.addEventListener('click', (e) => {
+    if (e.target === helpModal) helpModal.classList.add('hidden');
   });
   languageSelect.addEventListener('change', () => {
     state.appLang = languageSelect.value;
@@ -506,24 +551,27 @@
     cameraFrame.classList.add('hidden');
   }
 
-  async function startRecording() {
+  async function prepareMediaStream() {
+    if (state.practiceMode) return true;
     const isAudioOnly = state.recordMode === 'audio';
-    
     try {
       mediaStream = await navigator.mediaDevices.getUserMedia({
         video: isAudioOnly ? false : { width: 1280, height: 720 },
         audio: true,
       });
+      if (!isAudioOnly) {
+        cameraPreview.srcObject = mediaStream;
+        cameraFrame.classList.remove('hidden');
+      }
+      return true;
     } catch (err) {
       alert(`Could not access camera/microphone: ${err.message}`);
-      return;
+      return false;
     }
+  }
 
-    if (!isAudioOnly) {
-      cameraPreview.srcObject = mediaStream;
-      cameraFrame.classList.remove('hidden');
-    }
-
+  function beginMediaRecording() {
+    if (state.practiceMode || !mediaStream) return;
     const mimeType = pickMimeType();
     recordedChunks = [];
     mediaRecorder = new MediaRecorder(mediaStream, mimeType ? { mimeType } : undefined);
@@ -537,7 +585,6 @@
       const blob = new Blob(recordedChunks, { type: mimeType || fallbackType });
       recordedChunks = [];
       downloadRecording(blob, mimeType);
-      releaseCamera();
     };
 
     mediaRecorder.start();
@@ -546,8 +593,6 @@
     recIndicator.classList.remove('hidden');
     updateRecTimer();
     recTimerInterval = setInterval(updateRecTimer, 500);
-    const recSpan = recordBtn.querySelector('span');
-    if (recSpan) recSpan.textContent = i18n[state.appLang]['stopRecBtn'];
     recordBtn.classList.add('recording');
   }
 
@@ -556,38 +601,79 @@
     isRecording = false;
     clearInterval(recTimerInterval);
     recIndicator.classList.add('hidden');
-    const recSpan = recordBtn.querySelector('span');
-    if (recSpan) recSpan.textContent = i18n[state.appLang]['recBtn'];
     recordBtn.classList.remove('recording');
   }
 
   function toggleRecording() {
-    if (isRecording) stopRecording();
-    else startRecording();
+    // In the new UX, the record button is only used to STOP recording
+    if (isRecording) {
+      stopRecording();
+      exitPrompter();
+    }
   }
 
   recordBtn.addEventListener('click', toggleRecording);
 
   // ---------- View switching ----------
 
-  function enterPrompter() {
+  let countdownIntervalId = null;
+
+  async function enterPrompter() {
     const text = scriptInput.value.trim();
     if (!text) {
       scriptInput.focus();
       return;
     }
+    
+    // Step 1: Request permissions if needed
+    const streamReady = await prepareMediaStream();
+    if (!streamReady) return; // User denied permissions
+    
+    // Step 2: Show prompter view
     prompterText.textContent = text;
     applySettingsToPrompter();
     editorView.classList.add('hidden');
     prompterView.classList.remove('hidden');
     resetScroll();
-    // Give layout a tick to settle before enabling scroll math
-    requestAnimationFrame(() => requestAnimationFrame(updateTransform));
+    
+    if (state.practiceMode) {
+      recordBtn.classList.add('hidden');
+    } else {
+      recordBtn.classList.remove('hidden');
+    }
+    
+    // Step 3: Countdown
+    countdownOverlay.classList.remove('hidden');
+    let count = 3;
+    countdownOverlay.textContent = count;
+    
+    if (countdownIntervalId) clearInterval(countdownIntervalId);
+    countdownIntervalId = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countdownOverlay.textContent = count;
+      } else {
+        clearInterval(countdownIntervalId);
+        countdownOverlay.classList.add('hidden');
+        
+        // Give layout a tick to settle before enabling scroll math
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            updateTransform();
+            beginMediaRecording();
+            play(); // Auto-start scrolling
+          });
+        });
+      }
+    }, 1000);
   }
 
   function exitPrompter() {
+    if (countdownIntervalId) clearInterval(countdownIntervalId);
+    countdownOverlay.classList.add('hidden');
     pause();
     if (isRecording) stopRecording();
+    releaseCamera();
     prompterView.classList.add('hidden');
     editorView.classList.remove('hidden');
   }
