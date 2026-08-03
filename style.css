@@ -146,22 +146,121 @@ input[type="checkbox"] {
 }
 
 .credit-footer {
-  margin-top: 32px;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 14px;
-  color: #888;
+  color: #666;
 }
 
 .credit-footer a {
   color: var(--accent);
   text-decoration: none;
-  transition: opacity 0.15s;
 }
 
 .credit-footer a:hover {
-  opacity: 0.8;
   text-decoration: underline;
 }
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--bg);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+[dir="rtl"] .modal-close {
+  right: auto;
+  left: 15px;
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+.modal-body {
+  line-height: 1.6;
+}
+
+.modal-body ul {
+  padding-left: 20px;
+}
+
+[dir="rtl"] .modal-body ul {
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+.modal-body li {
+  margin-bottom: 10px;
+}
+
+/* Countdown Overlay */
+#countdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  font-size: 250px;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  pointer-events: none;
+}
+
+#countdown-overlay.hidden {
+  display: none;
+}
+
 
 /* ---------- Prompter view ---------- */
 
