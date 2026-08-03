@@ -67,7 +67,12 @@
       modeVideo: "Video + Audio",
       modeAudio: "Audio Only",
       creditPrefix: "Created by",
-      githubLink: "View on GitHub"
+      githubLink: "View on GitHub",
+      recordingFinished: "Recording Finished!",
+      saveFileBtn: "📥 Save File to Device",
+      closeBtnText: "✕ Close",
+      savedSuccessfully: "Saved successfully! 🎉",
+      checkDownloads: "Please check your Downloads folder or Photos app."
     },
     he: {
       title: "טלפרומפטר",
@@ -97,7 +102,47 @@
       modeVideo: "וידאו וקול",
       modeAudio: "קול בלבד",
       creditPrefix: "נוצר ע\"י",
-      githubLink: "צפה ב-GitHub"
+      githubLink: "צפה ב-GitHub",
+      recordingFinished: "ההקלטה הסתיימה!",
+      saveFileBtn: "📥 שמור קובץ למכשיר",
+      closeBtnText: "✕ סגור",
+      savedSuccessfully: "נשמר בהצלחה! 🎉",
+      checkDownloads: "בדוק בתיקיית ההורדות (Downloads) או באלבום התמונות שלך."
+    },
+    ar: {
+      title: "الملقن",
+      placeholder: "الصق أو اكتب النص هنا...",
+      textSize: "حجم النص:",
+      scrollSpeed: "سرعة التمرير:",
+      lineSpacing: "تباعد الأسطر:",
+      sideMargin: "الهوامش:",
+      textDirection: "اتجاه النص",
+      ltr: "من اليسار إلى اليمين (LTR)",
+      rtl: "من اليمين إلى اليسار (RTL)",
+      mirror: "نص معكوس (قلب أفقي)",
+      flipVertical: "قلب عمودي",
+      startBtn: "بدء الملقن",
+      playPause: "تشغيل/إيقاف مؤقت (مسافة)",
+      restart: "العودة للبداية (R)",
+      slower: "أبطأ (سهم لأسفل)",
+      faster: "أسرع (سهم لأعلى)",
+      smallerText: "تصغير النص",
+      largerText: "تكبير النص",
+      recBtn: "⏺ تسجيل",
+      stopRecBtn: "⏹ إيقاف",
+      recordTitle: "تسجيل (V)",
+      exitBtn: "✕ خروج",
+      exitTitle: "العودة للمحرر (Esc)",
+      recordMode: "وضع التسجيل",
+      modeVideo: "فيديو وصوت",
+      modeAudio: "صوت فقط",
+      creditPrefix: "تم الإنشاء بواسطة",
+      githubLink: "عرض على GitHub",
+      recordingFinished: "اكتمل التسجيل!",
+      saveFileBtn: "📥 احفظ الملف في الجهاز",
+      closeBtnText: "✕ إغلاق",
+      savedSuccessfully: "تم الحفظ بنجاح! 🎉",
+      checkDownloads: "يرجى التحقق من مجلد التنزيلات أو تطبيق الصور الخاص بك."
     }
   };
 
@@ -142,7 +187,7 @@
   function applyLanguage(lang) {
     const dict = i18n[lang] || i18n['en'];
     document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    document.documentElement.dir = (lang === 'he' || lang === 'ar') ? 'rtl' : 'ltr';
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -372,7 +417,8 @@
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
     const filename = `teleprompter-recording-${stamp}.${ext}`;
     const url = URL.createObjectURL(blob);
-    const isHe = state.appLang === 'he';
+    const isRtl = state.appLang === 'he' || state.appLang === 'ar';
+    const dict = i18n[state.appLang] || i18n['en'];
 
     // Create a fullscreen overlay for downloading (fixes iOS Safari blockers)
     const overlay = document.createElement('div');
@@ -387,17 +433,17 @@
     overlay.style.alignItems = 'center';
     overlay.style.justifyContent = 'center';
     overlay.style.zIndex = '9999';
-    if (isHe) overlay.dir = 'rtl';
+    if (isRtl) overlay.dir = 'rtl';
 
     const title = document.createElement('h2');
-    title.textContent = isHe ? 'ההקלטה הסתיימה!' : 'Recording Finished!';
+    title.textContent = dict['recordingFinished'];
     title.style.color = '#fff';
     title.style.marginBottom = '24px';
 
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
-    a.textContent = isHe ? '📥 שמור קובץ למכשיר' : '📥 Save File to Device';
+    a.textContent = dict['saveFileBtn'];
     a.style.padding = '16px 24px';
     a.style.backgroundColor = 'var(--accent)';
     a.style.color = '#000';
@@ -409,7 +455,7 @@
     a.style.textAlign = 'center';
 
     const closeBtn = document.createElement('button');
-    closeBtn.textContent = isHe ? '✕ סגור' : '✕ Close';
+    closeBtn.textContent = dict['closeBtnText'];
     closeBtn.style.padding = '10px 16px';
     closeBtn.style.backgroundColor = 'transparent';
     closeBtn.style.color = '#fff';
@@ -426,11 +472,11 @@
     
     a.onclick = () => {
       a.style.display = 'none';
-      title.textContent = isHe ? 'נשמר בהצלחה! 🎉' : 'Saved successfully! 🎉';
+      title.textContent = dict['savedSuccessfully'];
       title.style.color = 'var(--accent)';
       
       const sub = document.createElement('p');
-      sub.textContent = isHe ? 'בדוק בתיקיית ההורדות (Downloads) או באלבום התמונות שלך.' : 'Please check your Downloads folder or Photos app.';
+      sub.textContent = dict['checkDownloads'];
       sub.style.color = '#ddd';
       sub.style.fontSize = '18px';
       sub.style.textAlign = 'center';
