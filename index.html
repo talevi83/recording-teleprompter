@@ -1,128 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teleprompter</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recording Teleprompter</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="editor-view" class="view">
-  <div class="editor-panel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h1 data-i18n="title" style="margin: 0;">Teleprompter</h1>
-      <select id="language-select" style="padding: 6px; border-radius: 6px; background: var(--control-bg); color: var(--fg); border: 1px solid var(--border);">
-        <option value="en">English</option>
-        <option value="he">עברית</option>
-        <option value="ar">العربية</option>
-      </select>
-    </div>
-    <textarea id="script-input" data-i18n-placeholder="placeholder" placeholder="Paste or type your script here..."></textarea>
-
-    <div class="controls-grid">
-      <div class="control">
-        <label for="font-size"><span data-i18n="textSize">Text size:</span> <span id="font-size-value">48</span>px</label>
-        <input type="range" id="font-size" min="16" max="140" value="48" step="2">
-      </div>
-
-      <div class="control">
-        <label for="speed"><span data-i18n="scrollSpeed">Scroll speed:</span> <span id="speed-value">5</span></label>
-        <input type="range" id="speed" min="1" max="20" value="5" step="1">
-      </div>
-
-      <div class="control">
-        <label for="line-height"><span data-i18n="lineSpacing">Line spacing:</span> <span id="line-height-value">1.4</span></label>
-        <input type="range" id="line-height" min="1" max="2.5" value="1.4" step="0.1">
-      </div>
-
-      <div class="control">
-        <label for="margin"><span data-i18n="sideMargin">Side margin:</span> <span id="margin-value">10</span>%</label>
-        <input type="range" id="margin" min="0" max="40" value="10" step="1">
-      </div>
-
-      <div class="control">
-        <label for="direction-select" data-i18n="textDirection">Text direction</label>
-        <select id="direction-select">
-          <option value="ltr" data-i18n="ltr">Left to right (LTR)</option>
-          <option value="rtl" data-i18n="rtl">Right to left (RTL)</option>
+  <div id="editor-view" class="view">
+    <div class="editor-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 data-i18n="title" style="margin: 0;">Teleprompter</h1>
+        <select id="language-select"
+          style="padding: 6px; border-radius: 6px; background: var(--control-bg); color: var(--fg); border: 1px solid var(--border);">
+          <option value="en">English</option>
+          <option value="he">עברית</option>
+          <option value="ar">العربية</option>
         </select>
       </div>
+      <textarea id="script-input" data-i18n-placeholder="placeholder"
+        placeholder="Paste or type your script here..."></textarea>
 
-      <div class="control">
-        <label for="record-mode-select" data-i18n="recordMode">Recording Mode</label>
-        <select id="record-mode-select">
-          <option value="video" data-i18n="modeVideo">Video + Audio</option>
-          <option value="audio" data-i18n="modeAudio">Audio Only</option>
-        </select>
+      <div class="controls-grid">
+        <div class="control">
+          <label for="font-size"><span data-i18n="textSize">Text size:</span> <span
+              id="font-size-value">48</span>px</label>
+          <input type="range" id="font-size" min="16" max="140" value="48" step="2">
+        </div>
+
+        <div class="control">
+          <label for="speed"><span data-i18n="scrollSpeed">Scroll speed:</span> <span id="speed-value">5</span></label>
+          <input type="range" id="speed" min="1" max="20" value="5" step="1">
+        </div>
+
+        <div class="control">
+          <label for="line-height"><span data-i18n="lineSpacing">Line spacing:</span> <span
+              id="line-height-value">1.4</span></label>
+          <input type="range" id="line-height" min="1" max="2.5" value="1.4" step="0.1">
+        </div>
+
+        <div class="control">
+          <label for="margin"><span data-i18n="sideMargin">Side margin:</span> <span
+              id="margin-value">10</span>%</label>
+          <input type="range" id="margin" min="0" max="40" value="10" step="1">
+        </div>
+
+        <div class="control">
+          <label for="direction-select" data-i18n="textDirection">Text direction</label>
+          <select id="direction-select">
+            <option value="ltr" data-i18n="ltr">Left to right (LTR)</option>
+            <option value="rtl" data-i18n="rtl">Right to left (RTL)</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <label for="record-mode-select" data-i18n="recordMode">Recording Mode</label>
+          <select id="record-mode-select">
+            <option value="video" data-i18n="modeVideo">Video + Audio</option>
+            <option value="audio" data-i18n="modeAudio">Audio Only</option>
+          </select>
+        </div>
+
+        <div class="control checkbox-control">
+          <label><input type="checkbox" id="mirror-toggle"> <span data-i18n="mirror">Mirror text (horizontal
+              flip)</span></label>
+        </div>
+
+        <div class="control checkbox-control">
+          <label><input type="checkbox" id="flip-vertical-toggle"> <span data-i18n="flipVertical">Flip
+              vertically</span></label>
+        </div>
+
+        <div class="control checkbox-control"
+          style="grid-column: 1 / -1; margin-top: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+          <label><input type="checkbox" id="practice-mode-toggle"> <span data-i18n="practiceMode">Practice Mode (No
+              Recording)</span></label>
+        </div>
       </div>
 
-      <div class="control checkbox-control">
-        <label><input type="checkbox" id="mirror-toggle"> <span data-i18n="mirror">Mirror text (horizontal flip)</span></label>
-      </div>
+      <button id="start-btn" class="primary-btn" data-i18n="startBtn">Start Teleprompter</button>
 
-      <div class="control checkbox-control">
-        <label><input type="checkbox" id="flip-vertical-toggle"> <span data-i18n="flipVertical">Flip vertically</span></label>
-      </div>
-      
-      <div class="control checkbox-control" style="grid-column: 1 / -1; margin-top: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-        <label><input type="checkbox" id="practice-mode-toggle"> <span data-i18n="practiceMode">Practice Mode (No Recording)</span></label>
+      <div class="credit-footer">
+        <span data-i18n="creditPrefix">Created by</span> Tal
+        <span style="opacity: 0.5; margin: 0 8px;">|</span>
+        <a href="https://github.com/talevi83/recording-teleprompter" target="_blank" data-i18n="githubLink">View on
+          GitHub</a>
+        <span style="opacity: 0.5; margin: 0 8px;">|</span>
+        <a href="#" id="help-btn" data-i18n="helpBtn">Help & Instructions</a>
       </div>
     </div>
+  </div>
 
-    <button id="start-btn" class="primary-btn" data-i18n="startBtn">Start Teleprompter</button>
-
-    <div class="credit-footer">
-      <span data-i18n="creditPrefix">Created by</span> Tal 
-      <span style="opacity: 0.5; margin: 0 8px;">|</span>
-      <a href="https://github.com/talevi83/recording-teleprompter" target="_blank" data-i18n="githubLink">View on GitHub</a>
-      <span style="opacity: 0.5; margin: 0 8px;">|</span>
-      <a href="#" id="help-btn" data-i18n="helpBtn">Help & Instructions</a>
+  <div id="help-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="close-modal-btn" class="modal-close">✕</button>
+      <h2 class="modal-title" data-i18n="helpTitle">How to Use</h2>
+      <div class="modal-body">
+        <p data-i18n="helpP1">1. Paste your script into the editor.</p>
+        <p data-i18n="helpP2">2. Adjust settings (text size, speed, margins, etc.).</p>
+        <p data-i18n="helpP3">3. Click "Start Teleprompter" to begin. The recording will start automatically after a
+          3-second countdown (unless Practice Mode is checked).</p>
+        <p data-i18n="helpP4">4. During recording, use the <strong>Spacebar</strong> to pause/resume scrolling, and
+          <strong>Up/Down arrows</strong> to adjust speed.</p>
+        <p data-i18n="helpP5">5. Click "Stop & Save" to finish recording and save the video to your device.</p>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="help-modal" class="modal-overlay hidden">
-  <div class="modal-content">
-    <button id="close-modal-btn" class="modal-close">✕</button>
-    <h2 class="modal-title" data-i18n="helpTitle">How to Use</h2>
-    <div class="modal-body">
-      <p data-i18n="helpP1">1. Paste your script into the editor.</p>
-      <p data-i18n="helpP2">2. Adjust settings (text size, speed, margins, etc.).</p>
-      <p data-i18n="helpP3">3. Click "Start Teleprompter" to begin. The recording will start automatically after a 3-second countdown (unless Practice Mode is checked).</p>
-      <p data-i18n="helpP4">4. During recording, use the <strong>Spacebar</strong> to pause/resume scrolling, and <strong>Up/Down arrows</strong> to adjust speed.</p>
-      <p data-i18n="helpP5">5. Click "Stop & Save" to finish recording and save the video to your device.</p>
+  <div id="countdown-overlay" class="hidden">3</div>
+
+  <div id="prompter-view" class="view hidden">
+    <div id="prompter-text-wrapper">
+      <div id="prompter-text"></div>
+    </div>
+
+    <div id="center-line"></div>
+
+    <div id="camera-frame" class="hidden">
+      <video id="camera-preview" autoplay muted playsinline></video>
+      <div id="rec-indicator" class="hidden"><span class="rec-dot"></span><span id="rec-timer">00:00</span></div>
+    </div>
+
+    <div id="prompter-controls">
+      <button id="play-pause-btn" data-i18n-title="playPause" title="Play/Pause (Space)">▶</button>
+      <button id="restart-btn" data-i18n-title="restart" title="Restart to top (R)">⟲</button>
+      <button id="slower-btn" data-i18n-title="slower" title="Slower (Down arrow)">−</button>
+      <span id="speed-readout">5</span>
+      <button id="faster-btn" data-i18n-title="faster" title="Faster (Up arrow)">+</button>
+      <button id="font-smaller-btn" data-i18n-title="smallerText" title="Smaller text">A−</button>
+      <button id="font-larger-btn" data-i18n-title="largerText" title="Larger text">A+</button>
+      <button id="record-btn" data-i18n-title="stopRecTitle" title="Stop & Save (V)"><span data-i18n="stopRecBtn">⏹ Stop
+          & Save</span></button>
+      <button id="exit-btn" data-i18n-title="exitTitle" title="Back to editor (Esc)"><span data-i18n="exitBtn">✕
+          Exit</span></button>
     </div>
   </div>
-</div>
 
-<div id="countdown-overlay" class="hidden">3</div>
-
-<div id="prompter-view" class="view hidden">
-  <div id="prompter-text-wrapper">
-    <div id="prompter-text"></div>
-  </div>
-
-  <div id="center-line"></div>
-
-  <div id="camera-frame" class="hidden">
-    <video id="camera-preview" autoplay muted playsinline></video>
-    <div id="rec-indicator" class="hidden"><span class="rec-dot"></span><span id="rec-timer">00:00</span></div>
-  </div>
-
-  <div id="prompter-controls">
-    <button id="play-pause-btn" data-i18n-title="playPause" title="Play/Pause (Space)">▶</button>
-    <button id="restart-btn" data-i18n-title="restart" title="Restart to top (R)">⟲</button>
-    <button id="slower-btn" data-i18n-title="slower" title="Slower (Down arrow)">−</button>
-    <span id="speed-readout">5</span>
-    <button id="faster-btn" data-i18n-title="faster" title="Faster (Up arrow)">+</button>
-    <button id="font-smaller-btn" data-i18n-title="smallerText" title="Smaller text">A−</button>
-    <button id="font-larger-btn" data-i18n-title="largerText" title="Larger text">A+</button>
-    <button id="record-btn" data-i18n-title="stopRecTitle" title="Stop & Save (V)"><span data-i18n="stopRecBtn">⏹ Stop & Save</span></button>
-    <button id="exit-btn" data-i18n-title="exitTitle" title="Back to editor (Esc)"><span data-i18n="exitBtn">✕ Exit</span></button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

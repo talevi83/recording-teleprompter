@@ -25,7 +25,7 @@ public class LanguageTests extends BaseTest {
         // This assertion might fail if the app only has English and Hebrew currently.
         Assertions.assertTrue(options.contains("עברית"), "Missing option: עברית");
         Assertions.assertTrue(options.contains("English"), "Missing option: English");
-        // Assertions.assertTrue(options.contains("العربية"), "Missing option: العربية"); // Uncomment if Arabic is added
+         Assertions.assertTrue(options.contains("العربية"), "Missing option: العربية"); // Uncomment if Arabic is added
 
         // 1.2: Enter text into the textarea
         Locator scriptInput = page.locator("#script-input");

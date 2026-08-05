@@ -12,9 +12,10 @@ public class BaseTest {
     protected static Process serverProcess;
     protected BrowserContext context;
     protected Page page;
-    
+
     // The URL of the application to test
     protected final String APP_URL = "https://localhost:8090/";
+    protected final String LIVE_URL = "https://recording-teleprompter.netlify.app/";
 
     @BeforeAll
     static void launchBrowser() {
@@ -29,7 +30,7 @@ public class BaseTest {
             }
             pb.directory(new java.io.File(".."));
             serverProcess = pb.start();
-            
+
             // Wait for port 8090 to become active
             long startTime = System.currentTimeMillis();
             boolean serverReady = false;
@@ -69,11 +70,12 @@ public class BaseTest {
 
     @BeforeEach
     void createContextAndPage() {
-        // Grant permissions for camera and microphone so the prompt doesn't block the test
+        // Grant permissions for camera and microphone so the prompt doesn't block the
+        // test
         context = browser.newContext(new Browser.NewContextOptions()
                 .setIgnoreHTTPSErrors(true)
                 .setPermissions(Arrays.asList("camera", "microphone")));
-        
+
         page = context.newPage();
         page.navigate(APP_URL);
     }
