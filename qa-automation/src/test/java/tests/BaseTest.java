@@ -51,7 +51,7 @@ public class BaseTest {
         playwright = Playwright.create();
         // You can set headless = false to see the browser running during development
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
-                .setHeadless(false)
+                .setHeadless(true)
                 .setArgs(Arrays.asList("--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream")));
     }
 
